@@ -30,7 +30,7 @@ public class ConfirmReleaseGump : StaticGump<ConfirmReleaseGump>
 
         // Are you sure you want to release your pet?
         //builder.AddHtmlLocalized(20, 15, 230, 110, 1046257, true, true);
-        ReadOnlySpan<char> htmlText = $"Are you sure you wish to release {_pet.Name}? If they are summoned, they will immediately disappear.";
+        ReadOnlySpan<char> htmlText = $"Are you sure you wish to release this pet? If they are summoned, they will immediately disappear.";
         builder.AddHtml(20, 15, 230, 110, htmlText, true, true);
 
         builder.AddButton(20, 130, 4005, 4007, 2);

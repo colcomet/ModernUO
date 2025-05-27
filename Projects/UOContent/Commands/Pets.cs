@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Server.Gumps;
+using Server.Items;
 using Server.Mobiles;
 using Server.Network;
 
@@ -46,10 +47,10 @@ public class PetListGump : Gump
 
         AddPage(0);
 
-        AddBackground(0, 0, 425, 50 + m_List.Count * 20, 9250);
-        AddAlphaRegion(5, 5, 415, 40 + m_List.Count * 20);
+        AddBackground(0, 0, 455, 50 + m_List.Count * 20, 9250);
+        AddAlphaRegion(5, 5, 445, 40 + m_List.Count * 20);
 
-        AddHtml(15, 15, 275, 20, "<BASEFONT COLOR=#FFFFFF>Your current pets:</BASEFONT>");
+        AddHtml(15, 15, 405, 20, "<BASEFONT COLOR=#FFFFFF>Your current pets: (click button to release)</BASEFONT>");
 
         for (var i = 0; i < m_List.Count; ++i)
         {
@@ -60,9 +61,11 @@ public class PetListGump : Gump
                 continue;
             }
 
-            AddButton(15, 39 + i * 20, 10006, 10006, i + 1);
-
-            AddHtml(32, 35 + i * 20, 275, 18, GetPetEntryText(from, (BaseCreature)pet).Color(0xC0C0EE));
+            if (from.Mount != pet)
+            {
+                AddButton(15, 39 + i * 20, 10006, 10006, i + 1);
+            }
+            AddHtml(32, 35 + i * 20, 415, 18, GetPetEntryText(from, (BaseCreature)pet).Color(0xC0C0EE));
         }
     }
 
@@ -82,9 +85,10 @@ public class PetListGump : Gump
         }
         pm.SendGump(new ConfirmReleaseGump(pm, pet, checkRange: false));
     }
-    public static string GetPetEntryText(Mobile pm, BaseCreature pet)
+    public string GetPetEntryText(Mobile pm, BaseCreature pet)
     {
         if (pet == null) return string.Empty;
+        var coordsString = $"{pet.X}, {pet.Y}, {pet.Z}";
         string baseString = $"{pet.Name} (s: {pet.ControlSlots}) ";
         if (pet == pm.Mount)
         {
@@ -93,33 +97,106 @@ public class PetListGump : Gump
         else if (pm.Map == pet.Map)
         {
             var distance = (int)(pm.GetDistanceToSqrt(pet));
-            var direction = pm.GetDirectionTo(pet);
-            var dirString = direction.ToString();
+            var direction = pm.GetDirectionTo(pet.X, pet.Y, false);
+            var dirString = GetDirectionString(direction);
+            var distanceString = GetDistanceString(distance);
             if (distance == 0)
             {
                 return baseString + "(standing on your feet)";
             }
-            else if (direction == Direction.Up)
-            {
-                dirString = "Northwest";
-            }
-            else if (direction == Direction.Right)
-            {
-                dirString = "Northeast";
-            }
-            else if (direction == Direction.Left)
-            {
-                dirString = "Southwest";
-            }
-            else if (direction == Direction.Down)
-            {
-                dirString = "Southeast";
-            }
-            return baseString + $"({pet.X}, {pet.Y}, {pet.Z}), {distance} tiles, {dirString} ({pet.Region.Name})";
+            return baseString + $"({coordsString}) {distanceString}, {dirString}{GetRegionString(pet)}";
         }
         else
         {
-            return baseString + $"({pet.X}, {pet.Y}, {pet.Z}) in {pet.Map.Name}";
+            return baseString + $"({coordsString}) in {pet.Map.Name}";
+        }
+    }
+    private string GetDirectionString(Direction direction)
+    {
+        try
+        {
+            if ((direction | Direction.North) == Direction.North)
+            {
+                return "North";
+            }
+            else if ((direction | Direction.South) == Direction.South)
+            {
+                return "South";
+            }
+            else if ((direction | Direction.East) == Direction.East)
+            {
+                return "East";
+            }
+            else if ((direction | Direction.West) == Direction.West)
+            {
+                return "West";
+            }
+            else if ((direction | Direction.Left) == Direction.Left)
+            {
+                return "Southwest";
+            }
+            else if ((direction | Direction.Right) == Direction.Right)
+            {
+                return "Northeast";
+            }
+            else if ((direction | Direction.Down) == Direction.Down)
+            {
+                return "Southeast";
+            }
+            else if ((direction | Direction.Up) == Direction.Up)
+            {
+                return "Northwest";
+            }
+        }
+        catch (Exception ex)
+        {
+            return $"Error in GetDirectionString: {ex.Message}";
+        }
+        return "?" + (int)direction + "?";
+    }
+    private string GetRegionString(Mobile from)
+    {
+        try
+        {
+            if (!string.IsNullOrEmpty(from.Region.Name)) { return $" ({from.Region.Name})"; }
+            var map = from.Map;
+            if (map != null)
+            {
+                var reg = Region.Find(from.Location, from.Map);
+
+                if (!reg.IsDefault)
+                {
+                    var builder = new StringBuilder();
+
+                    builder.Append(reg);
+                    reg = reg.Parent;
+
+                    while (reg != null)
+                    {
+                        builder.Append(reg);
+                        reg = reg.Parent;
+                    }
+
+                    return $" ({builder})";
+                }
+                else { return "??"; }
+            }
+            return "?";
+        }
+        catch (Exception ex)
+        {
+            return $"Error in GetRegionString: {ex.Message}";
+        }
+    }
+    private string GetDistanceString(int distance)
+    {
+        if (distance < 1000)
+        {
+            return $"{distance} steps";
+        }
+        else
+        {
+            return "very far";
         }
     }
 }
