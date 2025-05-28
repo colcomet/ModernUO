@@ -111,42 +111,32 @@ public class PetListGump : Gump
             return baseString + $"({coordsString}) in {pet.Map.Name}";
         }
     }
+    private readonly static string dRight = Direction.Right.ToString();
+    private readonly static string dDown = Direction.Down.ToString();
+    private readonly static string dLeft = Direction.Left.ToString();
+    private readonly static string dUp = Direction.Up.ToString();
     private string GetDirectionString(Direction direction)
     {
         try
         {
-            if ((direction | Direction.North) == Direction.North)
-            {
-                return "North";
-            }
-            else if ((direction | Direction.South) == Direction.South)
-            {
-                return "South";
-            }
-            else if ((direction | Direction.East) == Direction.East)
-            {
-                return "East";
-            }
-            else if ((direction | Direction.West) == Direction.West)
-            {
-                return "West";
-            }
-            else if ((direction | Direction.Left) == Direction.Left)
-            {
-                return "Southwest";
-            }
-            else if ((direction | Direction.Right) == Direction.Right)
+            var ret = direction.ToString();
+            if (ret == dRight)
             {
                 return "Northeast";
             }
-            else if ((direction | Direction.Down) == Direction.Down)
+            else if (ret == dDown)
             {
                 return "Southeast";
             }
-            else if ((direction | Direction.Up) == Direction.Up)
+            else if (ret == dLeft)
+            {
+                return "Southwest";
+            }
+            else if (ret == dUp)
             {
                 return "Northwest";
             }
+            return ret;
         }
         catch (Exception ex)
         {
@@ -179,9 +169,9 @@ public class PetListGump : Gump
 
                     return $" ({builder})";
                 }
-                else { return "??"; }
+                else { return ""; }
             }
-            return "?";
+            return "";
         }
         catch (Exception ex)
         {
