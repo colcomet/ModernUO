@@ -346,7 +346,7 @@ public class MoongateGump : Gump
         else
         {
             var flags = mobile.NetState?.Flags ?? ClientFlags.None;
-            var young = mobile is PlayerMobile { Young: true };
+            var young = false; // mobile is PlayerMobile { Young: true };
 
             checkLists = Core.Expansion switch
             {
