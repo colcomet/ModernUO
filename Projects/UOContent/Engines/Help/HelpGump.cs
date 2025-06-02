@@ -233,6 +233,8 @@ public sealed class HelpGump : DynamicGump
 
     public static void HelpRequest(Mobile m)
     {
+        Server.Commands.CommandHandlers.Help_OnCommand(new CommandEventArgs(m, "HelpMenu", "", null));
+        return;
         if (m.HasGump<HelpGump>())
         {
             return;
