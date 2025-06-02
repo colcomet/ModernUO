@@ -115,7 +115,7 @@ public class PetListGump : Gump
     private readonly static string dDown = Direction.Down.ToString();
     private readonly static string dLeft = Direction.Left.ToString();
     private readonly static string dUp = Direction.Up.ToString();
-    private string GetDirectionString(Direction direction)
+    public static string GetDirectionString(Direction direction)
     {
         try
         {
@@ -144,7 +144,7 @@ public class PetListGump : Gump
         }
         return "?" + (int)direction + "?";
     }
-    private string GetRegionString(Mobile from)
+    public static string GetRegionString(Mobile from)
     {
         try
         {
@@ -178,7 +178,7 @@ public class PetListGump : Gump
             return $"Error in GetRegionString: {ex.Message}";
         }
     }
-    private string GetDistanceString(int distance)
+    public static string GetDistanceString(int distance)
     {
         if (distance < 1000)
         {
