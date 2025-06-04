@@ -8,11 +8,11 @@ namespace Server.Commands.Generic
     {
         public OnlineCommandImplementor()
         {
-            Accessors = new[] { "Online" };
+            Accessors = new[] { "OnlineX" };
             SupportRequirement = CommandSupport.Online;
             SupportsConditionals = true;
             AccessLevel = AccessLevel.GameMaster;
-            Usage = "Online <command> [condition]";
+            Usage = "OnlineX <command> [condition]";
             Description =
                 "Invokes the command on all mobiles that are currently logged in. Optional condition arguments can further restrict the set of objects.";
         }

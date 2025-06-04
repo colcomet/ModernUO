@@ -15,10 +15,10 @@ public static class Online
     public static void Configure()
     {
         CommandSystem.Register("Online", AccessLevel.Player, Online_OnCommand);
-        CommandSystem.Register("Who", AccessLevel.Player, Online_OnCommand); // Alias for compatibility
     }
 
     [Usage("Online"), Description("Displays currently connected players.")]
+    [Aliases("Who")]
     private static void Online_OnCommand(CommandEventArgs e)
     {
         var pm = e.Mobile as PlayerMobile;

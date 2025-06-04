@@ -43,7 +43,6 @@ public class WhoGump : DynamicGump
     }
 
     [Usage("WhoList [filter]")]
-    [Aliases("Who")]
     [Description("Lists all connected clients. Optionally filters results by name.")]
     private static void WhoList_OnCommand(CommandEventArgs e)
     {
