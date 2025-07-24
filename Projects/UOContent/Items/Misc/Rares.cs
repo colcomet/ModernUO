@@ -9,9 +9,10 @@ public partial class Rope : Item
     public Rope(int amount = 1) : base(0x14F8)
     {
         Stackable = true;
-        Weight = 1.0;
         Amount = amount;
     }
+
+    public override double DefaultWeight => 1.0;
 }
 
 [SerializationGenerator(0, false)]
@@ -21,9 +22,10 @@ public partial class IronWire : Item
     public IronWire(int amount = 1) : base(0x1876)
     {
         Stackable = true;
-        Weight = 5.0;
         Amount = amount;
     }
+
+    public override double DefaultWeight => 5.0;
 }
 
 [SerializationGenerator(0, false)]
@@ -33,9 +35,10 @@ public partial class SilverWire : Item
     public SilverWire(int amount = 1) : base(0x1877)
     {
         Stackable = true;
-        Weight = 5.0;
         Amount = amount;
     }
+
+    public override double DefaultWeight => 5.0;
 }
 
 [SerializationGenerator(0, false)]
@@ -45,9 +48,10 @@ public partial class GoldWire : Item
     public GoldWire(int amount = 1) : base(0x1878)
     {
         Stackable = true;
-        Weight = 5.0;
         Amount = amount;
     }
+
+    public override double DefaultWeight => 5.0;
 }
 
 [SerializationGenerator(0, false)]
@@ -57,9 +61,10 @@ public partial class CopperWire : Item
     public CopperWire(int amount = 1) : base(0x1879)
     {
         Stackable = true;
-        Weight = 5.0;
         Amount = amount;
     }
+
+    public override double DefaultWeight => 5.0;
 }
 
 [SerializationGenerator(0, false)]
@@ -69,9 +74,10 @@ public partial class WhiteDriedFlowers : Item
     public WhiteDriedFlowers(int amount = 1) : base(0xC3C)
     {
         Stackable = true;
-        Weight = 1.0;
         Amount = amount;
     }
+
+    public override double DefaultWeight => 1.0;
 }
 
 [SerializationGenerator(0, false)]
@@ -81,9 +87,10 @@ public partial class GreenDriedFlowers : Item
     public GreenDriedFlowers(int amount = 1) : base(0xC3E)
     {
         Stackable = true;
-        Weight = 1.0;
         Amount = amount;
     }
+
+    public override double DefaultWeight => 1.0;
 }
 
 [SerializationGenerator(0, false)]
@@ -93,9 +100,10 @@ public partial class DriedOnions : Item
     public DriedOnions(int amount = 1) : base(0xC40)
     {
         Stackable = true;
-        Weight = 1.0;
         Amount = amount;
     }
+
+    public override double DefaultWeight => 1.0;
 }
 
 [SerializationGenerator(0, false)]
@@ -105,23 +113,32 @@ public partial class DriedHerbs : Item
     public DriedHerbs(int amount = 1) : base(0xC42)
     {
         Stackable = true;
-        Weight = 1.0;
         Amount = amount;
     }
+
+    public override double DefaultWeight => 1.0;
 }
 
 [SerializationGenerator(0, false)]
 public partial class HorseShoes : Item
 {
     [Constructible]
-    public HorseShoes() : base(0xFB6) => Weight = 3.0;
+    public HorseShoes() : base(0xFB6)
+    {
+    }
+
+    public override double DefaultWeight => 3.0;
 }
 
 [SerializationGenerator(0, false)]
 public partial class ForgedMetal : Item
 {
     [Constructible]
-    public ForgedMetal() : base(0xFB8) => Weight = 5.0;
+    public ForgedMetal() : base(0xFB8)
+    {
+    }
+
+    public override double DefaultWeight => 5.0;
 }
 
 [SerializationGenerator(0, false)]
